@@ -1,0 +1,33 @@
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/posts/new">New Post</a>
+  </li>
+  @if(!auth)
+    <li class="nav-item">
+      <a class="nav-link" href="/auth/login">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/auth/register">Register</a>
+    </li>
+  @else
+    <li class="nav-item">
+      <a class="nav-link" href="/auth/logout">Logout</a>
+    </li>
+  @endif
+</ul>
+Add this route to index.js.
+
+1
+app.get("/auth/logout", redirectIfAuthenticated, logoutController);
+Create the logout.js controller and add the needed code.
+
+nodejs-blog-tutorial $touch controllers/logout.js
+
+module.exports = (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/')
+    })
+}
